@@ -1,0 +1,61 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.udemy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('mysql:mysql-connector-java:5.1.13')
+	compile("com.querydsl:querydsl-root:4.1.4")
+	compile("com.querydsl:querydsl-core:4.1.4")
+	compile("com.querydsl:querydsl-jpa:4.1.4")
+	compile("com.querydsl:querydsl-apt:4.1.4:jpa")
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+compileJava {
+	options.compilerArgs << "-s"
+	options.compilerArgs << "$projectDir/generated/java"
+
+	doFirst {
+		// make sure that directory exists
+		file(new File(projectDir, "/generated/java")).mkdirs()
+	}
+}
+
+clean.doLast {
+	// clean-up directory when necessary
+	file(new File(projectDir, "/generated")).deleteDir()
+}
+
+sourceSets {
+	generated {
+		java {
+			srcDir "$projectDir/generated/java"
+		}
+	}
+}
