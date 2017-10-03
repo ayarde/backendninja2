@@ -1,7 +1,11 @@
 package com.udemy.backendninja2.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,11 +21,14 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<UserRole> userRole = new HashSet<UserRole>();
 
     public User() {
     }
+
+    /*public User(String username, String password, boolean enabled, boolean b, boolean b1, boolean b2, List<GrantedAuthority> authorities) {
+    }*/
 
     public User(String username, String password, boolean enabled) {
         this.username = username;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 
 @Repository("userRepository")
-public class UserRepository extends JpaRepository<User, Serializable>{
+public interface UserRepository extends JpaRepository<User, Serializable>{
 
-    public abstract User findByUser(String username);
+    public abstract User findByUsername(String username);
 }
